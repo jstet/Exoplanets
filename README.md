@@ -1,6 +1,6 @@
 # Exoplanets
 
-WIP URL: 
+WIP URL: [exoplanets.jstet.net](https://exoplanets.jstet.net/)
 
 Inspired by: https://shirleywu.studio/filmflowers/
 
