@@ -18,10 +18,6 @@ Inspired by: https://shirleywu.studio/filmflowers/
 
 - Find correlations between attributes to improve colour matching
 
-## Data Source
-
-- [Repo](https://github.com/JStet/exoplanets_R_script) containing R script and json output.
-
 ## Sources
 
 - [Repo](https://github.com/JStet/exoplanets_R_script) containing R script and json output.
