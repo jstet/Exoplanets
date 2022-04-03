@@ -14,6 +14,10 @@ Inspired by: https://shirleywu.studio/filmflowers/
 - Flux -> Colour of circle
 - Object -> title
 
+## Todos
+
+- Find correlations between attributes to improve colour matching
+
 ## Data Source
 
 - [Gist](https://gist.github.com/JStet/651de83fa0e67a948e0d4ec07366ef4a) containing R script and json output.
