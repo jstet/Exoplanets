@@ -6,14 +6,19 @@
   import Svg from "./Svg.svelte";
 
   const url =
-    "https://gist.githubusercontent.com/JStet/651de83fa0e67a948e0d4ec07366ef4a/raw/21d29a466fdde81b91013b0d37c3c5f553720879/exoplanets.json";
+    "https://gist.githubusercontent.com/JStet/651de83fa0e67a948e0d4ec07366ef4a/raw/28044fa419d04e1ad8343afe3fc899380e1ec7c3/exoplanets.json";
 
   let rows = [];
   onMount(async () => {
     rows = await d3.json(url).then((data) => {
+      let Flux = data.map(({ Flux }) => Flux);
+      var spans = d3.max(Flux) / 5;
+
       return data;
     });
   });
+
+  // Color Calculation
 </script>
 
 <div class="columns is-multiline">
@@ -22,7 +27,9 @@
       name={row.Name}
       object={row.Object}
       radius={row.Radius}
-      distance={row.Scaled_Distance_Previous}
+      water_color={row.Water_Color}
+      scaled_distance_previous={row.Scaled_Distance_Previous}
+      scaled_flux={row.Scaled_Flux}
     />
   {/each}
 </div>
