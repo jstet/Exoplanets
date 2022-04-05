@@ -6,9 +6,18 @@
   import Svg from "./Svg.svelte";
 
   const url =
-    "https://gist.githubusercontent.com/JStet/651de83fa0e67a948e0d4ec07366ef4a/raw/28044fa419d04e1ad8343afe3fc899380e1ec7c3/exoplanets.json";
+    "https://raw.githubusercontent.com/JStet/exoplanets_R_script/main/exoplanets.json";
 
   let rows = [];
+
+  let teq_extent;
+  let teq_earth;
+  let teq_color_scale;
+
+  let flux_extent;
+  let flux_earth;
+  let flux_color_scale;
+
   onMount(async () => {
     rows = await d3.json(url).then((data) => {
       let Flux = data.map(({ Flux }) => Flux);
@@ -16,20 +25,42 @@
 
       return data;
     });
+
+    // Teq Color -> Water Color
+    teq_extent = d3.extent(rows, (d) => d.Teq);
+    teq_earth = rows[0]["Teq"];
+    teq_color_scale = d3
+      .scaleDiverging()
+      .domain([teq_extent[0], teq_earth, teq_extent[1]])
+      .interpolator(d3.interpolateBlues);
+
+    // Flux Color -> Continent Color
+    flux_extent = d3.extent(rows, (d) => d.Flux);
+    flux_earth = rows[0]["Flux"];
+    flux_color_scale = d3
+      .scaleDiverging()
+      .domain([flux_extent[1], flux_earth, flux_extent[0]])
+      .interpolator(d3.interpolateGreens);
   });
 
-  // Color Calculation
+  const distance_multiplier = 300;
 </script>
 
 <div class="columns is-multiline">
   {#each rows as row}
-    <Svg
-      name={row.Name}
-      object={row.Object}
-      radius={row.Radius}
-      water_color={row.Water_Color}
-      scaled_distance_previous={row.Scaled_Distance_Previous}
-      scaled_flux={row.Scaled_Flux}
-    />
+    <div
+      class="has-text-centered column {row.Scaled_Distance_Previous == 0
+        ? ''
+        : 'is-full'}"
+      style="margin-top: {distance_multiplier * row.Scaled_Distance_Previous}vh"
+    >
+      <Svg
+        name={row.Name}
+        object={row.Object}
+        radius={row.Radius}
+        continent_color={flux_color_scale(row.Flux)}
+        water_color={teq_color_scale(row.Teq)}
+      />
+    </div>
   {/each}
 </div>

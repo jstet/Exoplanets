@@ -1,1 +1,1 @@
-<div class="footer has-background-white" />
+<div class="footer has-background-dark" />
