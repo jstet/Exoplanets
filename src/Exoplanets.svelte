@@ -11,8 +11,12 @@
   let rows = [];
 
   let teq_extent;
-  let teq_median;
+  let teq_earth;
   let teq_color_scale;
+
+  let flux_extent;
+  let flux_earth;
+  let flux_color_scale;
 
   onMount(async () => {
     rows = await d3.json(url).then((data) => {
@@ -22,15 +26,24 @@
       return data;
     });
 
+    // Teq Color -> Water Color
     teq_extent = d3.extent(rows, (d) => d.Teq);
-    teq_median = d3.median(rows, (d) => d.Teq);
+    teq_earth = rows[0]["Teq"];
     teq_color_scale = d3
       .scaleDiverging()
-      .domain([teq_extent[0], teq_median, teq_extent[1]])
-      .interpolator(d3.interpolatePuOr);
+      .domain([teq_extent[0], teq_earth, teq_extent[1]])
+      .interpolator(d3.interpolateBlues);
+
+    // Flux Color -> Continent Color
+    flux_extent = d3.extent(rows, (d) => d.Flux);
+    flux_earth = rows[0]["Flux"];
+    flux_color_scale = d3
+      .scaleDiverging()
+      .domain([flux_extent[1], flux_earth, flux_extent[0]])
+      .interpolator(d3.interpolateGreens);
   });
 
-  const distance_multiplier = 100;
+  const distance_multiplier = 300;
 </script>
 
 <div class="columns is-multiline">
@@ -45,7 +58,7 @@
         name={row.Name}
         object={row.Object}
         radius={row.Radius}
-        scaled_flux={row.Scaled_Flux}
+        continent_color={flux_color_scale(row.Flux)}
         water_color={teq_color_scale(row.Teq)}
       />
     </div>
