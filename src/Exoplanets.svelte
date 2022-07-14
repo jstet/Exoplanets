@@ -26,6 +26,7 @@
       return data;
     });
 
+    // https://observablehq.com/@d3/working-with-color
     // Teq Color -> Water Color
     teq_extent = d3.extent(rows, (d) => d.Teq);
     teq_earth = rows[0]["Teq"];
