@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    environment:
+      - LETSENCRYPT_HOST=exoplanets.jstet.net
+      - VIRTUAL_HOST=exoplanets.jstet.net
+    restart: always
+    networks:
+    - nginx-proxy_proxy
+    - default
+networks:
+  nginx-proxy_proxy:
+    external: true
+
