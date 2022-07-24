@@ -2,8 +2,8 @@ services:
   web:
     build: .
     environment:
-      - LETSENCRYPT_HOST=exoplanets.jstet.net
-      - VIRTUAL_HOST=exoplanets.jstet.net
+      - LETSENCRYPT_HOST=planets.jstet.net
+      - VIRTUAL_HOST=planets.jstet.net
     restart: unless-stopped
     networks:
     - proxy
